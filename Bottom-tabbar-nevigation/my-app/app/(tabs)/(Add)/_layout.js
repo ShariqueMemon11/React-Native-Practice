@@ -1,15 +1,16 @@
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { Drawer } from 'expo-router/drawer';
 import {router , usePathname } from 'expo-router'
-import {Feather,MaterialCommunityIcons} from '@expo/vector-icons';
+import {Feather ,MaterialCommunityIcons} from '@expo/vector-icons';
 import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
-import { Image, StyleSheet, View , Text, Switch } from 'react-native';
-import { useContext  } from 'react';
+import { Image, StyleSheet, View , Text } from 'react-native';
+import { useContext } from 'react';
 import { ThemeContext } from '@/app/src/context/ThemeContext';
 
 const CustomeDrawerContent=(props)=>{
   const pathname = usePathname();
-  const {currentTheme} = useContext(ThemeContext)
+  const {currentTheme} = useContext(ThemeContext);
+  
   return(
     <DrawerContentScrollView {...props} contentContainerStyle={{ backgroundColor: currentTheme === 'dark' ? '#212121':'white'}}>
       <View style={styles.userinfowrapper}>
@@ -22,29 +23,28 @@ const CustomeDrawerContent=(props)=>{
         </View>
       </View>
      
-      
       <DrawerItem
         icon={() => (
-          <Feather name="home" size={30} color= {(pathname === '/' || pathname === '/index' || pathname === '/(tabs)/(Home)') ? '#fff' : '#000'} />
+          <Feather name="home" size={24} color= {pathname === '/(tabs)/(Home)' ? '#fff' : '#000'} />
         )}
         label={'Home'}
-        labelStyle={[styles.navitemlable,{color: (pathname === '/(tabs)/(Home)' || pathname === '/' ) ? '#fff' : '#000'}]}
-        style={{backgroundColor:(pathname === '/' || pathname === '/(tabs)/(Home)' ) ? '#333' : '#fff', marginBottom:5}}
+        labelStyle={[styles.navitemlable,{color: pathname === '/(tabs)/(Home)' ? '#fff' : '#000'}]}
+        style={{backgroundColor:pathname === '/(tabs)/(Home)' ? '#333' : '#fff', marginBottom:5}}
         onPress={()=>{
           router.push('/(tabs)/(Home)');
-        }}/>
-        <DrawerItem
-        icon={() => (
-          <MaterialCommunityIcons name="plus" size={30} color= {pathname === '/(tabs)/(Add)' ? '#fff' : '#000'} />
-        )}
-        label={'Add'}
-        labelStyle={[styles.navitemlable,{color: pathname === '/(tabs)/(Add)' ? '#fff' : '#000'}]}
-        style={{backgroundColor:pathname === '/(tabs)/(Add)' ? '#333' : '#fff', marginBottom:5}}
-        onPress={()=>{
-          router.push('/(tabs)/(Add)');
           console.log(pathname);
         }}/>
 
+      <DrawerItem
+        icon={() => (
+          <MaterialCommunityIcons name="plus" size={30} color= {(pathname === '/' || pathname === '/index' || pathname === '/(tabs)/(Add)') ? '#fff' : '#000'} />
+        )}
+        label={'Add'}
+        labelStyle={[styles.navitemlable,{color: (pathname === '/(tabs)/(Add)' || pathname === '/' || pathname === '/(tabs)/index') ? '#fff' : '#000'}]}
+        style={{backgroundColor:(pathname === '/' || pathname === '/(tabs)/(Add)' || pathname === '/(tabs)/index') ? '#333' : '#fff', marginBottom:5}}
+        onPress={()=>{
+          router.push('/(tabs)/(Add)');
+        }}/>
       <DrawerItem
         icon={() => (
           <Feather name="user" size={24} color= {(pathname === '/Profile' || pathname === '/(tabs)/Profile') ? '#fff' : '#000'} />
@@ -67,15 +67,16 @@ const CustomeDrawerContent=(props)=>{
         }}/>
 
       <DrawerItem
-        icon={() => (
-         <Feather name='settings' size={24} color= {(pathname === '/Settings') ? '#fff' : '#000'} />
-        )}
-        label={'Settings'}
-        labelStyle={[styles.submenuLabel,{color: (pathname === '/Settings' ) ? '#fff' : '#000'}]}
-        style={[styles.submenuItem, {backgroundColor:(pathname === '/Settings' ) ? '#333' : '#fff'}]}
-        onPress={()=>{
-          router.push('/Settings');
-        }}/>
+       icon={() => (
+        <Feather name='settings' size={24} color= {(pathname === '/Settings') ? '#fff' : '#000'} />
+      )}
+      label={'Settings'}
+      labelStyle={[styles.submenuLabel,{color: (pathname === '/Settings' ) ? '#fff' : '#000'}]}
+      style={[styles.submenuItem, {backgroundColor:(pathname === '/Settings' ) ? '#333' : '#fff'}]}
+      onPress={()=>{
+        router.push('/Settings');
+      }}/>
+        
     </DrawerContentScrollView>
   )
 }
@@ -84,6 +85,7 @@ export default function DrawerLayout() {
   return (
     <Drawer
       screenOptions={{
+        drawerType: 'front',
         drawerStyle: { backgroundColor: currentTheme === 'dark' ? '#212121':'white', paddingRight:-20 , width:290},
         headerStyle: { backgroundColor: currentTheme === 'dark' ? '#333':'white' },
         headerTintColor: currentTheme === 'dark' ? 'white': '#333',
@@ -92,7 +94,7 @@ export default function DrawerLayout() {
       }}
       drawerContent={(props)=> <CustomeDrawerContent {...props} />}
     >
-      <Drawer.Screen name="index" options={{ title: 'Settings' }} />
+      <Drawer.Screen name="index" options={{ title: 'Add' }} />
     </Drawer>
   );
 }
@@ -117,5 +119,6 @@ const styles = StyleSheet.create({
     height: 89,
     borderRadius:40, 
     marginBottom:15
-  }
+  },
+
 })

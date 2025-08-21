@@ -2,23 +2,17 @@ import { View, Text, StyleSheet, TouchableOpacity, Switch } from 'react-native'
 import React, { useContext } from 'react'
 import SettingsBtn from '@/app/src/component/SettingsBtn'
 import { ThemeContext } from '@/app/src/context/ThemeContext';
+import TabBarLayout1 from './TabBar-Layout-1';
+import TabBarlayout2 from './TabBar-Layout-2';
+import { ScrollView } from 'react-native-gesture-handler';
 const Theme = () => {
 
   const {currentTheme, toggleTheme} = useContext(ThemeContext);
   
   return (
-    <View style={[styles.container,{backgroundColor:currentTheme === 'dark' ? '#212121':'white'}]}>
-      
-      <Text style={[styles.title,{color:currentTheme === 'dark' ? 'white':''}]}>Theme Switch</Text>
-
-      <TouchableOpacity style={[styles.btn,{backgroundColor:currentTheme === 'dark' ? '#333':'white'}]} onPress={()=>{}}>
-        
-        <Text style={{color:currentTheme === 'dark' ? 'white':''}}>Dark Mode</Text>
-
-        <Switch value={currentTheme === 'dark'} onValueChange={()=>toggleTheme(currentTheme=== 'light' ? 'dark':'light')}/>
-
-      </TouchableOpacity>
-
+    <ScrollView>
+    <View style={[styles.container,{backgroundColor:currentTheme === 'dark' ? '#212121':'#f7f7fb'}]}>
+      <View style={{padding:25 }}>
       <Text style={[styles.title,{color:currentTheme === 'dark' ? 'white' : ''}]}>Theme Settings</Text>
 
       <SettingsBtn title='Light'
@@ -32,8 +26,16 @@ const Theme = () => {
        onPress={()=>{toggleTheme('dark')}} 
        isActive={currentTheme==='dark'}
       />
-
+      </View>
+      <View style={{ marginBottom:80 , marginTop:-30}}>
+      <TabBarLayout1/>
+      <View style={{marginTop:-17}}>
+      <TabBarlayout2/>
+      </View>
+      </View>
     </View>
+    </ScrollView>
+    
   )
 }
 
@@ -42,7 +44,6 @@ export default Theme
 const styles = StyleSheet.create({
   container:{
     flex:1,
-    padding:20,
   },
   title:{
     fontSize:18,

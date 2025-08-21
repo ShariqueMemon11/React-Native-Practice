@@ -11,7 +11,6 @@ const TabBarBtn = ({onPress,
   onLongPress,
   isFocused,
   routeName,
-  color,
   labelText
 }: 
 {onPress:Function,
@@ -24,6 +23,9 @@ const TabBarBtn = ({onPress,
   const scale = useSharedValue(0);
   const {currentTheme} = useContext(ThemeContext);
   useEffect(()=>{
+    // initialize immediately to avoid initial flicker
+    scale.value = typeof isFocused === 'boolean' ? (isFocused ? 1 : 0) : isFocused
+    // then animate subsequent focus changes
     scale.value = withSpring(typeof isFocused === 'boolean' ? (isFocused ? 1 :0): isFocused, {duration:350})
   },[scale,isFocused])
 

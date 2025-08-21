@@ -4,7 +4,7 @@ import {router , usePathname } from 'expo-router'
 import {Feather,MaterialCommunityIcons} from '@expo/vector-icons';
 import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
 import { Image, StyleSheet, View , Text, Switch } from 'react-native';
-import { useContext  } from 'react';
+import { useContext } from 'react';
 import { ThemeContext } from '@/app/src/context/ThemeContext';
 
 const CustomeDrawerContent=(props)=>{
@@ -67,15 +67,15 @@ const CustomeDrawerContent=(props)=>{
         }}/>
 
       <DrawerItem
-        icon={() => (
+       icon={() => (
          <Feather name='settings' size={24} color= {(pathname === '/Settings') ? '#fff' : '#000'} />
         )}
-        label={'Settings'}
-        labelStyle={[styles.submenuLabel,{color: (pathname === '/Settings' ) ? '#fff' : '#000'}]}
-        style={[styles.submenuItem, {backgroundColor:(pathname === '/Settings' ) ? '#333' : '#fff'}]}
-        onPress={()=>{
-          router.push('/Settings');
-        }}/>
+      label={'Settings'}
+      labelStyle={[styles.submenuLabel,{color: (pathname === '/Settings' ) ? '#fff' : '#000'}]}
+      style={[styles.submenuItem, {backgroundColor:(pathname === '/Settings' ) ? '#333' : '#fff'}]}
+      onPress={()=>{
+        router.push('/Settings');
+      }}/> 
     </DrawerContentScrollView>
   )
 }
@@ -92,7 +92,7 @@ export default function DrawerLayout() {
       }}
       drawerContent={(props)=> <CustomeDrawerContent {...props} />}
     >
-      <Drawer.Screen name="index" options={{ title: 'Settings' }} />
+      <Drawer.Screen name="index" options={{ title: 'Home' }} />
     </Drawer>
   );
 }
@@ -117,5 +117,6 @@ const styles = StyleSheet.create({
     height: 89,
     borderRadius:40, 
     marginBottom:15
-  }
+  },
+
 })

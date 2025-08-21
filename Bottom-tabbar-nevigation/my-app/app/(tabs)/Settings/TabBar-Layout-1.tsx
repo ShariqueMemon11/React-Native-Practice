@@ -1,7 +1,7 @@
-import { View, Text, Switch } from 'react-native'
+import { View, Text, Switch, StyleSheet } from 'react-native'
 import React, { useContext, useMemo } from 'react'
 import { useTabBar } from '@/app/src/context/TabBarContext'
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
+import {Feather ,MaterialCommunityIcons} from '@expo/vector-icons'
 import { ThemeContext } from '@/app/src/context/ThemeContext'
 
 const TabBarLayout1 = () => {
@@ -10,8 +10,8 @@ const TabBarLayout1 = () => {
 
   const isDark = currentTheme === 'dark'
   const colors = useMemo(() => ({
-    background: isDark ? '#0f1115' : '#f7f7fb',
-    card: isDark ? '#171a21' : '#ffffff',
+    background: isDark ? '#212121' : '#f7f7fb',
+    card: isDark ? '#212121' : '#ffffff',
     textPrimary: isDark ? '#e6e6e6' : '#1f2937',
     textSecondary: isDark ? '#a8b0ba' : '#6b7280',
     border: isDark ? '#2a2f3a' : '#e5e7eb',
@@ -28,7 +28,7 @@ const TabBarLayout1 = () => {
           borderRadius: 16,
           padding: 20,
           shadowColor: '#000',
-          shadowOpacity: 0.1,
+          shadowOpacity: 0.4,
           shadowRadius: 10,
           shadowOffset: { width: 0, height: 4 },
           elevation: 4,
@@ -68,10 +68,23 @@ const TabBarLayout1 = () => {
             marginBottom: 18
           }}
         >
-          <MaterialCommunityIcons name="home-variant" size={22} color={isDark ? '#9aa4af' : '#9ca3af'} />
-          <MaterialCommunityIcons name="web" size={22} color={isDark ? '#9aa4af' : '#9ca3af'} />
-          <MaterialCommunityIcons name="account" size={22} color={isDark ? '#9aa4af' : '#9ca3af'} />
-       
+          <View style={styles.iconstyle}>
+          <Feather name="home" size={22} color={isDark ? 'white' : 'black'} />
+          <Text style={[styles.textstyle,{color : isDark ? 'white' : 'black'}]}>Home</Text>
+          </View>
+          <View style={styles.iconstyle}>
+          <MaterialCommunityIcons name="web" size={22}  color={isDark ? 'white' : 'black'} />
+          <Text style={[styles.textstyle,{color : isDark ? 'white' : 'black'}]}>WebView</Text>
+          </View>
+          <View style={styles.iconstyle}>
+          <MaterialCommunityIcons name="plus" size={24}  color={isDark ? 'white' : 'black'} />
+          <Text style={[styles.textstyle,{color : isDark ? 'white' : 'black'}]}>Add</Text>
+          </View>
+          <View style={styles.iconstyle}>
+          <Feather name="user" size={22}  color={isDark ? 'white' : 'black'} />
+          <Text style={[styles.textstyle,{color : isDark ? 'white' : 'black'}]}>Profile</Text>
+          </View>
+
           <View
             style={{
               width: 46,
@@ -82,7 +95,7 @@ const TabBarLayout1 = () => {
               justifyContent: 'center'
             }}
           >
-            <MaterialCommunityIcons name="cog" size={22} color={isDark ? '#9aa4af' : '#9ca3af'} />
+            <MaterialCommunityIcons name="cog" size={22} color={'white'} />
        
           </View>
              </View>
@@ -94,7 +107,7 @@ const TabBarLayout1 = () => {
           </View>
           <Switch
             value={isOn}
-            onValueChange={(next) => setVariant(next ? 'layout1' : 'default')}
+            onValueChange={(next) => setVariant(next ? 'layout1' : 'layout2')}
             trackColor={{ false: isDark ? '#3a3f4a' : '#e5e7eb', true: '#34d399' }}
             thumbColor={isOn ? '#ffffff' : isDark ? '#c7cdd6' : '#ffffff'}
             ios_backgroundColor={isDark ? '#3a3f4a' : '#e5e7eb'}
@@ -106,3 +119,10 @@ const TabBarLayout1 = () => {
 }
 
 export default TabBarLayout1
+
+const styles = StyleSheet.create({
+  iconstyle:{
+    flexDirection:'column',justifyContent:'center',alignItems:'center'
+  },
+  textstyle:{color:'#9aa4af' , marginTop:2}
+})

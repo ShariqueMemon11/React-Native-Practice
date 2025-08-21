@@ -1,10 +1,12 @@
 import { Stack } from 'expo-router';
 import ThemeProvider from './src/context/ThemeContext';
 import { TabBarProvider } from './src/context/TabBarContext';
-import { StatusBar } from 'react-native';
+import { StatusBar, View } from 'react-native';
 import { ThemeContext } from '@/app/src/context/ThemeContext';
 import React, {useContext , useState} from 'react';
 import Onboard from '../app/src/component/onboard'
+import SplashScreen from './src/screens/SplashScreen';
+import Loginscreen from './src/screens/loginscreen';
 
 function ThemedStatusBar() {
   const { currentTheme } = useContext(ThemeContext);
@@ -13,19 +15,28 @@ function ThemedStatusBar() {
 }
 
 export default function RootLayout() {
-  const [showOnboarding, setShowOnboarding] = useState(true); // Control onboarding visibility
+  const [showSplashscreen, setSplashscreen] = useState(true)
+  const [showOnboarding, setShowOnboarding] = useState(true); 
 
   return (
+
     <ThemeProvider>
       <TabBarProvider>
         <ThemedStatusBar />
-        {showOnboarding ? (
+        {showSplashscreen ? (
+          <SplashScreen Oncomplete={() => setSplashscreen(false)} />
+         ) :
+        // (
+        //   <Loginscreen/>
+        //  ) 
+         showOnboarding ? (
           <Onboard onComplete={() => setShowOnboarding(false)} />
         ) : (
           <Stack initialRouteName="(tabs)" screenOptions={{ headerShown: false }}>
             <Stack.Screen name="(tabs)" />
           </Stack>
-        )}
+        )
+        }
       </TabBarProvider>
     </ThemeProvider>
   );

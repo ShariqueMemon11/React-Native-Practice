@@ -4,7 +4,7 @@ import {router , usePathname } from 'expo-router'
 import {Feather,MaterialCommunityIcons} from '@expo/vector-icons';
 import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
 import { Image, StyleSheet, View , Text, Switch } from 'react-native';
-import { useContext  } from 'react';
+import { useContext , useState } from 'react';
 import { ThemeContext } from '@/app/src/context/ThemeContext';
 
 const CustomeDrawerContent=(props)=>{
@@ -66,7 +66,7 @@ const CustomeDrawerContent=(props)=>{
           router.push('/Webview');
         }}/>
 
-      <DrawerItem
+<DrawerItem
         icon={() => (
          <Feather name='settings' size={24} color= {(pathname === '/Settings') ? '#fff' : '#000'} />
         )}
@@ -92,7 +92,7 @@ export default function DrawerLayout() {
       }}
       drawerContent={(props)=> <CustomeDrawerContent {...props} />}
     >
-      <Drawer.Screen name="index" options={{ title: 'Settings' }} />
+      <Drawer.Screen name="index" options={{ title: 'Profile' }} />
     </Drawer>
   );
 }
@@ -118,4 +118,5 @@ const styles = StyleSheet.create({
     borderRadius:40, 
     marginBottom:15
   }
+
 })

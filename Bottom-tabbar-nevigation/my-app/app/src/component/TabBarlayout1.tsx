@@ -1,5 +1,5 @@
 import { View, StyleSheet, LayoutChangeEvent} from 'react-native';
-import React, { useState, useContext} from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import TabBarBtn from './TabBarBtn';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
@@ -30,6 +30,20 @@ export function TabBarLayout1({ state, descriptors, navigation }: BottomTabBarPr
       }],
     }
   })
+
+  // Keep the indicator aligned with the active tab on mount, layout, and when the active tab changes
+  const hasInitializedRef = useRef(false);
+  useEffect(() => {
+    const nextX = buttonwidth * state.index;
+    if (buttonwidth > 0) {
+      if (!hasInitializedRef.current) {
+        tabPositionX.value = nextX; // set synchronously to avoid initial jump
+        hasInitializedRef.current = true;
+      } else {
+        tabPositionX.value = withSpring(nextX, { damping: 15, stiffness: 180 });
+      }
+    }
+  }, [buttonwidth, state.index]);
   return (
     <View onLayout={onTabbarLayout} style={[styles.tabbar,{backgroundColor: currentTheme==='dark'?'#2C2C2C':'#fff'}]}>
       <Animated.View style={[animatedstyle,{
@@ -52,7 +66,7 @@ export function TabBarLayout1({ state, descriptors, navigation }: BottomTabBarPr
         const isFocused = state.index === index;
 
         const onPress = () => {
-          tabPositionX.value=withSpring(buttonwidth * index, {duration : 350})
+          tabPositionX.value = withSpring(buttonwidth * index, { damping: 15, stiffness: 180 })
           const event = navigation.emit({
             type: 'tabPress',
             target: route.key,

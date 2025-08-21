@@ -3,8 +3,8 @@ import { Drawer } from 'expo-router/drawer';
 import {router , usePathname } from 'expo-router'
 import {Feather,MaterialCommunityIcons} from '@expo/vector-icons';
 import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
-import { Image, StyleSheet, View , Text, Switch } from 'react-native';
-import { useContext  } from 'react';
+import { Image, StyleSheet, View , Text } from 'react-native';
+import { useContext } from 'react';
 import { ThemeContext } from '@/app/src/context/ThemeContext';
 
 const CustomeDrawerContent=(props)=>{
@@ -47,11 +47,11 @@ const CustomeDrawerContent=(props)=>{
 
       <DrawerItem
         icon={() => (
-          <Feather name="user" size={24} color= {(pathname === '/Profile' || pathname === '/(tabs)/Profile') ? '#fff' : '#000'} />
+          <Feather name="user" size={24} color= {(pathname === '/(tabs)/(Profile)' ) ? '#fff' : '#000'} />
         )}
         label={'Profile'}
-        labelStyle={[styles.navitemlable,{color: (pathname === '/Profile' || pathname === '/(tabs)/Profile') ? '#fff' : '#000'}]}
-        style={{backgroundColor:(pathname === '/Profile' || pathname === '/(tabs)/Profile') ? '#333' : '#fff', marginBottom:5}}
+        labelStyle={[styles.navitemlable,{color: (pathname === '/(tabs)/(Profile)' ) ? '#fff' : '#000'}]}
+        style={{backgroundColor:(pathname === '/(tabs)/(Profile)' || pathname === '/(tabs)/Profile') ? '#333' : '#fff', marginBottom:5}}
         onPress={()=>{
           router.push('/Profile');
         }}/>
@@ -65,7 +65,7 @@ const CustomeDrawerContent=(props)=>{
         onPress={()=>{
           router.push('/Webview');
         }}/>
-
+      
       <DrawerItem
         icon={() => (
          <Feather name='settings' size={24} color= {(pathname === '/Settings') ? '#fff' : '#000'} />
@@ -92,7 +92,7 @@ export default function DrawerLayout() {
       }}
       drawerContent={(props)=> <CustomeDrawerContent {...props} />}
     >
-      <Drawer.Screen name="index" options={{ title: 'Settings' }} />
+      <Drawer.Screen name="index" options={{ title: 'Webview' }} />
     </Drawer>
   );
 }
@@ -118,4 +118,5 @@ const styles = StyleSheet.create({
     borderRadius:40, 
     marginBottom:15
   }
+
 })

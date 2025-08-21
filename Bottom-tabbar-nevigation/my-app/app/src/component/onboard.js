@@ -177,22 +177,19 @@ const Onboard = ({ onComplete }) => {
     <View style={styles.mainContainer}>
       <StatusBar translucent backgroundColor="black" barStyle="light-content" />
       
-      {/* Black border around entire screen */}
       <View style={styles.blackBorder}>
-        {/* Main content area with white background */}
         <View style={styles.contentArea}>
           {renderItem({item: data[currentIndex], index: currentIndex})}
         </View>
 
-        {/* Bottom navigation bar - no black background */}
         <View style={styles.bottomNavigationBar}>
-          {/* Dots */}
+     
           {renderDots()}
           
-          {/* Navigation Buttons */}
+        
           {renderNavigationButtons()}
           
-          {/* Skip Button */}
+      
           {renderSkipButton()}
         </View>
       </View>

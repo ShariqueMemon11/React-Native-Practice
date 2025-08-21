@@ -13,7 +13,7 @@ type Settingsbtnprops={
 const SettingsBtn = ({title,icon,onPress,isActive}:Settingsbtnprops) => {
   const {currentTheme} = useContext(ThemeContext)
   return (
-    <TouchableOpacity style={[styles.settingsbtn,{backgroundColor:currentTheme ==='dark' ? '#333' : ''}]} onPress={onPress}>
+    <TouchableOpacity style={[styles.settingsbtn,{backgroundColor:currentTheme ==='dark' ? '#333' : '#e6e8e6'}]} onPress={onPress}>
         <View style={styles.titlewrapper}>
         <MaterialCommunityIcons name={icon} size={20} color={currentTheme ==='dark' ? 'white' : ''}/>
         <Text style={[styles.title,{color:currentTheme ==='dark' ? 'white' : ''}]}>{title}</Text>
