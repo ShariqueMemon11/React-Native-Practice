@@ -3,12 +3,23 @@ import { Drawer } from 'expo-router/drawer';
 import {router , usePathname } from 'expo-router'
 import {Feather,MaterialCommunityIcons} from '@expo/vector-icons';
 import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
-import { Image, StyleSheet, View , Text, Switch } from 'react-native';
+import { Image, StyleSheet, View , Text,TouchableOpacity, Alert,} from 'react-native';
 import { useContext  } from 'react';
 import { ThemeContext } from '@/app/src/context/ThemeContext';
+import { signOut } from "firebase/auth";
+import { auth } from '@/firebaseConfig';
 
 const CustomeDrawerContent=(props)=>{
   const pathname = usePathname();
+  const handlelogin = async () => {
+    try{
+      await signOut(auth)
+      router.push('/src/screens/loginscreen')
+    }
+    catch{
+      Alert.alert('error while loging Out')
+    }
+  }
   const {currentTheme} = useContext(ThemeContext)
   return(
     <DrawerContentScrollView {...props} contentContainerStyle={{ backgroundColor: currentTheme === 'dark' ? '#212121':'white'}}>
@@ -19,10 +30,13 @@ const CustomeDrawerContent=(props)=>{
         <View style={styles.userinfo}>
         <Text style={{fontSize:17 , fontWeight:'bold' , color: currentTheme === 'dark' ? 'white':''}}>Shariq Memon</Text>
         <Text style={{color: currentTheme === 'dark' ? 'white':''}}>memonshariq10@gmail.com</Text>
+        <View style={{flex:1,marginRight:-48,marginLeft:48}}>
+        <TouchableOpacity style={styles.btnStyles} onPress={handlelogin }>
+          <Text style={styles.btntext}>LogOut</Text>
+        </TouchableOpacity>
         </View>
-      </View>
-     
-      
+        </View>
+      </View> 
       <DrawerItem
         icon={() => (
           <Feather name="home" size={30} color= {(pathname === '/' || pathname === '/index' || pathname === '/(tabs)/(Home)') ? '#fff' : '#000'} />
@@ -117,5 +131,33 @@ const styles = StyleSheet.create({
     height: 89,
     borderRadius:40, 
     marginBottom:15
-  }
+  },
+  inputStyle: {
+    borderWidth: 1,
+    borderColor: "#d0d0d0",
+    borderRadius: 10,
+    padding: 12,
+    fontSize: 16,
+    backgroundColor: '#f8fafd',
+    color: '#111',
+  },
+  color: 'white',
+  fontWeight: 'bold',
+  fontSize: 18,
+  btnStyles: {
+    flex: 1,
+    borderRadius: 40,
+    paddingVertical: 7,
+    marginHorizontal: 50,
+    backgroundColor: '#2f7acf',
+    alignItems: 'center',
+    marginRight:45,
+    marginBottom:5,
+    marginTop:4,
+  },
+  btntext: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 13,
+  },
 })

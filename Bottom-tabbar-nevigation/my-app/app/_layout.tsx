@@ -16,6 +16,7 @@ function ThemedStatusBar() {
 
 export default function RootLayout() {
   const [showSplashscreen, setSplashscreen] = useState(true)
+  const [showLogin, setLogin] = useState(true);
   const [showOnboarding, setShowOnboarding] = useState(true); 
 
   return (
@@ -25,11 +26,11 @@ export default function RootLayout() {
         <ThemedStatusBar />
         {showSplashscreen ? (
           <SplashScreen Oncomplete={() => setSplashscreen(false)} />
-         ) :
-        // (
-        //   <Loginscreen/>
-        //  ) 
-         showOnboarding ? (
+        ) : showLogin ?
+        (
+          <Loginscreen onComplete={() => setLogin(false)}/>
+        ):
+        showOnboarding ? (
           <Onboard onComplete={() => setShowOnboarding(false)} />
         ) : (
           <Stack initialRouteName="(tabs)" screenOptions={{ headerShown: false }}>

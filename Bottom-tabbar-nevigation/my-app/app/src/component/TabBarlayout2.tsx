@@ -25,7 +25,7 @@ const iconsL2: Record<string, (p:{color:string; focused:boolean})=>React.ReactEl
     justifyContent:"center", 
     backgroundColor: focused ? '#3D59AB' : '',
     borderRadius:99999
-    }}><MaterialCommunityIcons name="web" size={24} color={color}/>
+    }}><MaterialCommunityIcons name="card-account-phone-outline" size={24} color={color}/>
     </View>),
   '(Add)':   ({focused}) => (<View style={{
     height:60,

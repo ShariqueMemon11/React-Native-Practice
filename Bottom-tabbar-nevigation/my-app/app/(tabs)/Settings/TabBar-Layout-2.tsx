@@ -69,7 +69,9 @@ const TabBarLayout2 = () => {
           }}
         >
           <Feather name="home" size={22} color={isDark ? 'gray' : 'black'} />
-          <MaterialCommunityIcons name="web" size={22} color={isDark ? 'gray' : 'black'} />
+        
+          
+          <Feather name="user" size={22} color={isDark ? 'gray' : 'black'} />
           <View
             style={{
               width: 56,
@@ -83,7 +85,7 @@ const TabBarLayout2 = () => {
           >
           <Feather name="plus" size={28} color={'white'} />
           </View>
-          <Feather name="user" size={22} color={isDark ? 'gray' : 'black'} />
+          <MaterialCommunityIcons name="card-account-phone-outline" size={22} color={isDark ? 'gray' : 'black'} />
           <View style={{
              width: 40,
              height: 40,
@@ -93,7 +95,7 @@ const TabBarLayout2 = () => {
              justifyContent: 'center',
              
           }}>
-          <Feather name="settings" size={22} color={isDark ? 'white' : 'black'} />
+          <Feather name="settings" size={22} color={'white'} />
           </View>
         </View>
 

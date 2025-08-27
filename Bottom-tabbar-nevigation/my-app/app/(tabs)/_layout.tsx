@@ -31,10 +31,11 @@ export default function TabsLayout() {
 		tabBar={tabBar}
 		>
 			<Tabs.Screen name='(Home)' options={{ title: 'Home', headerShown: false}} />
-			<Tabs.Screen name="Webview" options={{ title: 'WebView' , headerShown: false}} />
-			<Tabs.Screen name="(Add)" options={{ title: 'Add', headerShown: false }} />
 			<Tabs.Screen name="Profile" options={{ title: 'Profile' , headerShown: false}} />
+			<Tabs.Screen name="(Add)" options={{ title: 'Add', headerShown: false }} />
+			<Tabs.Screen name="Webview" options={{ title: 'ContactUs' , headerShown: false}} />
 			<Tabs.Screen name="Settings" options={{ title: 'Settings', headerShown: false }} />
+
 		</Tabs>
 	);
 }

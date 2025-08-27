@@ -73,10 +73,6 @@ const TabBarLayout1 = () => {
           <Text style={[styles.textstyle,{color : isDark ? 'white' : 'black'}]}>Home</Text>
           </View>
           <View style={styles.iconstyle}>
-          <MaterialCommunityIcons name="web" size={22}  color={isDark ? 'white' : 'black'} />
-          <Text style={[styles.textstyle,{color : isDark ? 'white' : 'black'}]}>WebView</Text>
-          </View>
-          <View style={styles.iconstyle}>
           <MaterialCommunityIcons name="plus" size={24}  color={isDark ? 'white' : 'black'} />
           <Text style={[styles.textstyle,{color : isDark ? 'white' : 'black'}]}>Add</Text>
           </View>
@@ -84,7 +80,10 @@ const TabBarLayout1 = () => {
           <Feather name="user" size={22}  color={isDark ? 'white' : 'black'} />
           <Text style={[styles.textstyle,{color : isDark ? 'white' : 'black'}]}>Profile</Text>
           </View>
-
+          <View style={styles.iconstyle}>
+          <MaterialCommunityIcons name="card-account-phone-outline" size={22}  color={isDark ? 'white' : 'black'} />
+          <Text style={[styles.textstyle,{color : isDark ? 'white' : 'black'}]}>WebView</Text>
+          </View>
           <View
             style={{
               width: 46,

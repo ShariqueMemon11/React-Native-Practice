@@ -1,50 +1,85 @@
 import { View, Text, StyleSheet, TextInput, Image, ScrollView, KeyboardAvoidingView, Platform, TouchableOpacity, Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import React, { useState } from 'react'
+import React, { useState , useContext  } from 'react'
+import{collection , addDoc, serverTimestamp} from 'firebase/firestore'
+import {db} from '../../../firebaseConfig'
+import { ThemeContext } from '@/app/src/context/ThemeContext';
 
 const Webview: React.FC = () => {
   const [fullName, setFullName] = useState('')
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
   const navigation = useNavigation<any>()
-  const submit = () => {
+  const { currentTheme } = useContext(ThemeContext);
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  
+  const submit = async() => {
     if (!fullName || !email || !message) {
       Alert.alert('Fill all the fields to submit')
       return
     }
-    Alert.alert('Message Submitted Successfully')
-    navigation.navigate('(Home)')
+    if (!emailRegex.test(email)){
+      Alert.alert('Enter valid email')
+      return
+    }
+    try{
+      await addDoc(collection(db, 'Contact_Us_Msgs'), {
+        fullName,
+        email,
+        message,
+        timestamp: serverTimestamp(),
+        status: 'new'
+      })
+      Alert.alert('Success', 'Message Submitted Successfully') 
+      setFullName('')
+      setEmail('')
+      setMessage('')
+      navigation.navigate('(Home)')
+    } catch (error: any) {
+      Alert.alert('Error', `Failed to submit: ${error.message}`)
+    }
   }
   return (
-    <KeyboardAvoidingView style={{flex:1,backgroundColor:'#eaf4ff'}} behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}>
-    <ScrollView style={{backgroundColor:'#eaf4ff'}} contentContainerStyle={{paddingBottom:24}} keyboardShouldPersistTaps={'handled'}>
-    <View style={styles.mainContainer}>
+    <KeyboardAvoidingView style={{flex:1,backgroundColor:'transparent'}} 
+    behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
+    keyboardVerticalOffset={0}>
+    <ScrollView style={{backgroundColor:currentTheme === 'dark' ? '#212121' : '#ffffff'}} contentContainerStyle={{paddingBottom:24}} keyboardShouldPersistTaps={'handled'}>
+    <View style={[styles.mainContainer,{backgroundColor:currentTheme === 'dark' ?  '#212121' : '#ffffff'}]}>
       <Image source={require('../images/logo2.png')} style={styles.logo} resizeMode="contain" />
-      <Text style={styles.mainHader}>Delivering innovative and robust software solutions tailored to your business needs</Text>
-
-      <View style={{backgroundColor:'#f5faff' , padding:10,borderRadius:20}}>
+      <Text style={[styles.mainHader,{color:currentTheme === 'dark' ?  'white' : 'black'}]}>Delivering innovative and robust software solutions tailored to your business needs</Text>
+      
+      <View style={{
+          backgroundColor:currentTheme === 'dark' ?  '#212121' : '#f5faff',
+          borderRadius: 16,
+          padding: 20,
+          shadowColor: '#000',
+          shadowOpacity: 0.4,
+          shadowRadius: 10,
+          shadowOffset: { width: 0, height: 4 },
+          elevation: 4,
+          borderColor: currentTheme === 'dark' ?  '#212121' : '#f5faff'}}>
       <View style={styles.inputContainer}>
-        <Text style={styles.labels}>Name</Text>
+        <Text style={[styles.labels,{color:currentTheme === 'dark' ?  'white' : '#7d7d7d'}]}>Name</Text>
         <TextInput
-          style={styles.inputStyle} placeholder='Your Name' placeholderTextColor={'#9CA3AF'}
+          style={[styles.inputStyle,{borderColor: currentTheme === 'dark' ? 'white' : 'rgba(0, 0, 0, 0.3)',color:currentTheme === 'dark' ?  'white' : '#111'}]} placeholder='Your Name' placeholderTextColor={currentTheme === 'dark' ?  'white' : '#9CA3AF'}
             value={fullName}
             onChangeText={(username)=> setFullName(username)}
           />
       </View>
 
       <View style={styles.inputContainer}>
-        <Text style={styles.labels}>Email</Text>
+        <Text style={[styles.labels,{color:currentTheme === 'dark' ?  'white' : '#7d7d7d'}]}>Email</Text>
         <TextInput
-          style={styles.inputStyle} placeholder={'example@gmail.com'} placeholderTextColor={'#9CA3AF'}
+          style={[styles.inputStyle,{borderColor: currentTheme === 'dark' ? 'white' : 'rgba(0, 0, 0, 0.3)',color:currentTheme === 'dark' ?  'white' : '#111'}]} placeholder={'example@gmail.com'} placeholderTextColor={currentTheme === 'dark' ?  'white' : '#9CA3AF'}
             value={email}
             onChangeText={(useremail) => setEmail(useremail)}
           />
       </View>
 
       <View style={styles.inputContainer}>
-        <Text style={styles.labels}>How we can help you?</Text>
+        <Text style={[styles.labels,{color:currentTheme === 'dark' ?  'white' : '#7d7d7d'}]}>How we can help you?</Text>
         <TextInput
-          style={[styles.inputStyle,styles.multilineStyle]} placeholder={'Your Consern'} placeholderTextColor={'#9CA3AF'} multiline
+          style={[styles.inputStyle,styles.multilineStyle,{borderColor: currentTheme === 'dark' ? 'white' : 'rgba(0, 0, 0, 0.3)',color:currentTheme === 'dark' ?  'white' : '#111'}]} placeholder={'Your Consern'} placeholderTextColor={currentTheme === 'dark' ?  'white' : '#9CA3AF'} multiline
            value={message}
            onChangeText={(usermsg) => setMessage(usermsg)}
           />
@@ -88,7 +123,6 @@ const styles = StyleSheet.create({
     paddingBottom:15,
     fontFamily: 'JosefinSans_500Medium',
     textTransform:'capitalize'
-
   },
   inputContainer:{
     marginTop: 10,
@@ -96,7 +130,7 @@ const styles = StyleSheet.create({
   labels:{
     fontWeight: "bold",
     // fontSize: 15,
-    color: "#7d7d7d",
+  
     paddingBottom: 5,
     fontFamily: "JosefinSans_300Light",
     lineHeight: 25,
@@ -108,7 +142,6 @@ const styles = StyleSheet.create({
     paddingVertical: 7,
     borderRadius: 6,
     width: '100%',
-    color: '#111',
   },
   multilineStyle:{
     paddingVertical: 3,
