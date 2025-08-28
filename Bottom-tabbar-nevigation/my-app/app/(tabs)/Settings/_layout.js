@@ -2,7 +2,6 @@ import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { Drawer } from 'expo-router/drawer';
 import {router , usePathname } from 'expo-router'
 import {Feather,MaterialCommunityIcons} from '@expo/vector-icons';
-import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
 import { Image, StyleSheet, View , Text,TouchableOpacity, Alert,} from 'react-native';
 import { useContext  } from 'react';
 import { ThemeContext } from '@/app/src/context/ThemeContext';
@@ -71,9 +70,9 @@ const CustomeDrawerContent=(props)=>{
         }}/>
       <DrawerItem
         icon={() => (
-          <SimpleLineIcons name="globe" size={24} color= {(pathname === '/Webview' || pathname === '/(tabs)/Webview') ? '#fff' : '#000'} />
+          <Feather name="mail" size={24} color= {(pathname === '/Webview' || pathname === '/(tabs)/Webview') ? '#fff' : '#000'} />
         )}
-        label={'Webview'}
+        label={'ContactUs'}
         labelStyle={[styles.navitemlable,{color: (pathname === '/Webview' || pathname === '/(tabs)/Webview') ? '#fff' : '#000'}]}
         style={{backgroundColor:(pathname === '/Webview' || pathname === '/(tabs)/Webview') ? '#333' : '#fff'}}
         onPress={()=>{

@@ -35,6 +35,7 @@ export default function RootLayout() {
         ) : (
           <Stack initialRouteName="(tabs)" screenOptions={{ headerShown: false }}>
             <Stack.Screen name="(tabs)" />
+            <Stack.Screen name="Webview" />
           </Stack>
         )
         }

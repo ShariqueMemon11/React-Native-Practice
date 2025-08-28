@@ -72,9 +72,9 @@ const CustomeDrawerContent=(props)=>{
         }}/>
       <DrawerItem
         icon={() => (
-          <SimpleLineIcons name="globe" size={24} color= {(pathname === '/Webview' || pathname === '/(tabs)/Webview') ? '#fff' : '#000'} />
+          <Feather name="mail" size={24} color= {(pathname === '/Webview' || pathname === '/(tabs)/Webview') ? '#fff' : '#000'} />
         )}
-        label={'Webview'}
+        label={'ContactUs'}
         labelStyle={[styles.navitemlable,{color: (pathname === '/Webview' || pathname === '/(tabs)/Webview') ? '#fff' : '#000'}]}
         style={{backgroundColor:(pathname === '/Webview' || pathname === '/(tabs)/Webview') ? '#333' : '#fff'}}
         onPress={()=>{

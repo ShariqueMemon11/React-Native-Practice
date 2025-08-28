@@ -1,5 +1,6 @@
 import { View, Text, StatusBar, Image, TouchableOpacity, Dimensions, Animated } from 'react-native'
 import React, { useState, useRef } from 'react'
+import ProgressButton from '../component/progressbtn'
 
 const { width, height } = Dimensions.get('window');
 
@@ -134,33 +135,31 @@ const Onboard = ({ onComplete }) => {
   };
 
   const renderNavigationButtons = () => {
+
+  const profress =(currentIndex+1)/data.length
+
     return (
       <View style={styles.navigationContainer}>
-        <TouchableOpacity
-          style={[
-            styles.navButton,
-            currentIndex === 0 && styles.disabledButton
-          ]}
-          onPress={goToPrev}
-          disabled={currentIndex === 0}
-        >
+        <ProgressButton
+        progress={profress}
+        onPress={goToPrev}
+        disabled={currentIndex === 0}>
           <Image 
             source={require('../images/rightbtn.png')} 
             style={styles.arrowIcon} 
             resizeMode="contain"
           />
-        </TouchableOpacity>
-        
-        <TouchableOpacity
-          style={styles.navButton}
-          onPress={goToNext}
-        >
+        </ProgressButton>
+        <ProgressButton
+        progress={profress}
+        onPress={goToNext}
+        disabled={currentIndex === data.length-1}>
           <Image 
             source={require('../images/leftbtn.png')} 
             style={styles.arrowIcon} 
             resizeMode="contain"
           />
-        </TouchableOpacity>
+        </ProgressButton>
       </View>
     );
   };
@@ -282,27 +281,10 @@ const styles = {
     marginBottom: 30,
     paddingHorizontal: 20,
   },
-  navButton: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  disabledButton: {
-  },
+  
   arrowIcon: {
-    width: 54,
-    height: 54,
-    // Removed tintColor to show original image colors
+    width: 60,
+    height: 65,
   },
   skipButton: {
     alignSelf: 'center',

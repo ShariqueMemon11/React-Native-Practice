@@ -85,7 +85,6 @@ const TabBarLayout2 = () => {
           >
           <Feather name="plus" size={28} color={'white'} />
           </View>
-          <MaterialCommunityIcons name="card-account-phone-outline" size={22} color={isDark ? 'gray' : 'black'} />
           <View style={{
              width: 40,
              height: 40,
