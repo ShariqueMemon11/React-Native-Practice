@@ -2,7 +2,6 @@ import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { Drawer } from 'expo-router/drawer';
 import {router , usePathname } from 'expo-router'
 import {Feather,MaterialCommunityIcons} from '@expo/vector-icons';
-import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
 import { Image, StyleSheet, View , Text, Switch, Alert, TouchableOpacity } from 'react-native';
 import { useContext } from 'react';
 import { ThemeContext } from '@/app/src/context/ThemeContext';
@@ -27,9 +26,9 @@ const CustomeDrawerContent=(props)=>{
         style={styles.userimg}
         resizeMode="cover"/>
         <View style={styles.userinfo}>
-        <Text style={{fontSize:17 , fontWeight:'bold' , color: currentTheme === 'dark' ? 'white':''}}>Shariq Memon</Text>
-        <Text style={{color: currentTheme === 'dark' ? 'white':''}}>memonshariq10@gmail.com</Text>
-        <View style={{flex:1,marginRight:-48,marginLeft:48}}>
+        <Text style={{fontSize:17 , fontWeight:'bold' , color: currentTheme === 'dark' ? 'white':''}}>{auth.currentUser?.displayName}</Text>
+        <Text style={{color: currentTheme === 'dark' ? 'white':''}}>{auth.currentUser?.email}</Text>
+        <View style={{flex:1,marginRight:-84,marginLeft:68}}>
           <TouchableOpacity style={styles.btnStyles} onPress={handleLogout}>
             <Text style={styles.btntext}>LogOut</Text>
           </TouchableOpacity>

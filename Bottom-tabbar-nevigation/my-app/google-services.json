@@ -12,7 +12,20 @@
           "package_name": "com.expo.myapp"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "207363485397-cneme1e2cb8h7h51esop7qhg3kop14nr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.expo.myapp",
+            "certificate_hash": "c3d880ab0b65eeed7bdda70d4a19594621b5db86"
+          }
+        },
+        {
+          "client_id": "207363485397-3nh2rvvdssesr7oe1tohnne1he4gr9vp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBOINlQSyJcMXMNUtfnPO6rSww20wg_g4E"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "207363485397-3nh2rvvdssesr7oe1tohnne1he4gr9vp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

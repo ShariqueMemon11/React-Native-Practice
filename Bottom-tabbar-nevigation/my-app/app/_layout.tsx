@@ -1,12 +1,11 @@
 import { Stack } from 'expo-router';
-import ThemeProvider from './src/context/ThemeContext';
-import { TabBarProvider } from './src/context/TabBarContext';
+import ThemeProvider, { ThemeContext } from '@/app/src/context/ThemeContext';
+import { TabBarProvider } from '@/app/src/context/TabBarContext';
 import { StatusBar, View } from 'react-native';
-import { ThemeContext } from '@/app/src/context/ThemeContext';
 import React, {useContext , useState} from 'react';
-import Onboard from '../app/src/component/onboard'
-import SplashScreen from './src/screens/SplashScreen';
-import Loginscreen from './src/screens/loginscreen';
+import Onboard from '@/app/src/component/onboard'
+import SplashScreen from '@/app/src/screens/SplashScreen';
+import Loginscreen from '@/app/src/screens/loginscreen';
 
 function ThemedStatusBar() {
   const { currentTheme } = useContext(ThemeContext);

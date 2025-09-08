@@ -1,42 +1,64 @@
 import { View, Text, StyleSheet, Image, KeyboardAvoidingView, Platform, ScrollView, TextInput, TouchableOpacity, Alert } from 'react-native'
 import React , {useState} from 'react'
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword , updateProfile} from "firebase/auth";
+import { doc ,setDoc } from 'firebase/firestore';
 import { auth } from '@/firebaseConfig';
-import SigninScreen from './SigninScreen';
+import { router } from 'expo-router';
+import { db } from '@/firebaseConfig';
+import GoogleLoginButton from '../component/googlesignup';
 
-const Loginscreen = ({ onComplete }) => {
+const SigninScreen = ({ onComplete }) => {
+  const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setpassword] = useState('');
-  const [showSignin, setShowSignin] = useState(false);
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passRegex = /^(?=.*[A-Z]).{8,}$/
   const submit = async () => {
-    if (!email || !password) {
-      Alert.alert('enter email and password to login')
+    if (!email || !password || !fullName) {
+      Alert.alert('enter name email and password to signup')
       return
     }
-    try{
-      await signInWithEmailAndPassword(auth,email,password)
-      onComplete()
+    if (!emailRegex.test(email)){
+      Alert.alert('Enter valid email')
+      return
     }
-    catch{
-      Alert.alert('login failed invalid email or password')
+    if(!passRegex.test(password)){
+      Alert.alert("least 8 chars, with at least one uppercase:")
+      return
+    }
+    try {
+      const userCredential = await createUserWithEmailAndPassword (auth,email,password)
+      await updateProfile(userCredential.user , {displayName : fullName })
+      await setDoc(doc(db , 'users', userCredential.user.uid),
+      {fullName , email , createdAt: new Date()})
+     onComplete()
+     router.push("/src/screens/loginscreen")
+    }
+    catch(error){
+      Alert.alert('SignUp failed try again', error.message)
       setpassword('')
+      setEmail('')
+      setFullName('')
     }
-
   }
-  if (showSignin) {
-    return <SigninScreen onComplete={() => setShowSignin(false)} />
-  }
-
   return (
     <KeyboardAvoidingView style={styles.keyboardAvoiding} behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}>
       <ScrollView style={{backgroundColor:'#eaf4ff'}} contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}} keyboardShouldPersistTaps={'handled'}>
         <View style={styles.mainContainer}>
           <Image source={require('../images/logo2.png')} style={styles.logo} resizeMode="contain" />
           
-          <Text style={styles.subtitle}>
-            Delivering Innovative And Robust Software Solutions Tailored To Your Business Needs
-          </Text>
           <View style={styles.formContainer}>
+          <View style={styles.inputContainer}>
+              <Text style={styles.labels}>Full Name</Text>
+              <TextInput
+                style={styles.inputStyle}
+                placeholder="Your Name"
+                placeholderTextColor="#9CA3AF"
+                value={fullName}
+                onChangeText={setFullName}
+                autoCorrect={false}
+                />
+            </View>
             <View style={styles.inputContainer}>
               <Text style={styles.labels}>Email</Text>
               <TextInput
@@ -67,22 +89,21 @@ const Loginscreen = ({ onComplete }) => {
               style={styles.btnStyles}
               onPress={submit}
             >
-              <Text style={styles.btntext}>LogIn</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.btnStyles}
-              onPress={() => setShowSignin(true)}
-            >
-              <Text style={styles.btntext}>SignIn</Text>
+              <Text style={styles.btntext}>Sign Up</Text>
             </TouchableOpacity>
           </View>
+          <Text style={styles.orText}>Or</Text>
+          <View style={styles.socialContainer}>
+            <GoogleLoginButton onSuccess={() => router.push('/src/component/onboard')} />
+          </View>
+          <Text style={styles.AllText}>Already have an account? <Text style={{color:'blue'}} onPress={() => [router.push('/src/screens/loginscreen'), onComplete(false)]}>log In</Text></Text>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
   )
 }
 
-export default Loginscreen
+export default SigninScreen
 
 const styles = StyleSheet.create({
   keyboardAvoiding: {
@@ -103,7 +124,7 @@ const styles = StyleSheet.create({
     height: 220,
     marginBottom: -40,
     alignSelf: 'center',
-    marginTop:-180,
+    marginTop:-100,
     marginLeft:-15
   },
  
@@ -149,8 +170,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
-    maxWidth: 250,
-    marginTop: 10,
+    maxWidth: 280,
+    marginTop: 5,
   },
   btnStyles: {
     flex: 1,
@@ -165,4 +186,28 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 18,
   },
-})
+  orText: {
+    marginTop:27,
+    fontSize:16,
+    color:'black',
+    fontWeight:'bold',
+    fontFamily:'JosefinSans_300Light',
+    textAlign:'center',
+    marginBottom:20
+  },
+  socialContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 20,
+    marginTop: -5,
+  },
+  AllText: {
+    marginTop:20,
+    fontSize:16,
+    color:'black',
+    fontFamily:'JosefinSans_300Light',
+    textAlign:'center',
+  },
+  
+  
+})    
