@@ -1,7 +1,7 @@
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { Drawer } from 'expo-router/drawer';
 import {router , usePathname } from 'expo-router'
-import {Feather,MaterialCommunityIcons} from '@expo/vector-icons';
+import {Feather,MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons';
 import { Image, StyleSheet, View , Text, Switch, Alert, TouchableOpacity } from 'react-native';
 import { useContext } from 'react';
 import { ThemeContext } from '@/app/src/context/ThemeContext';
@@ -78,6 +78,17 @@ const CustomeDrawerContent=(props)=>{
         style={{backgroundColor:(pathname === '/Webview' || pathname === '/(tabs)/Webview') ? '#333' : '#fff'}}
         onPress={()=>{
           router.push('/Webview');
+        }}/>
+        <DrawerItem
+        icon={() => (
+          <MaterialIcons name="support-agent" size={24} color= {pathname === '/(support)'  ? '#fff' : '#000'} />
+        )}
+        
+        label={'Support'}
+        labelStyle={[styles.navitemlable,{color: pathname === '/Webview'  ? '#fff' : '#000'}]}
+        style={{backgroundColor:(pathname === '/(support)') ? '#333' : '#fff'}}
+        onPress={()=>{
+          router.push('/support');
         }}/>
 
       <DrawerItem

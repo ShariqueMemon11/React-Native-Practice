@@ -13,5 +13,5 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
-, "app/(tabs)/Settings/_layout.js", "app/src/component/onboard.tsx", "app/src/screens/SplashScreen.js", "app/(tabs)/(main)/layout.js", "app/src/screens/loginscreen.js"  ]
+, "app/(tabs)/Settings/_layout.js", "app/src/component/onboard.tsx", "app/src/screens/SplashScreen.js", "app/(tabs)/(main)/layout.js", "app/src/screens/loginscreen.js", "app/src/screens/Forgetbtn.tsx"  ]
 }

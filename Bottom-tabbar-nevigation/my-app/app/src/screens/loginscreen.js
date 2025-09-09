@@ -3,11 +3,13 @@ import React , {useState} from 'react'
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '@/firebaseConfig';
 import SigninScreen from './SigninScreen';
+import ForgotPassword from './Forgetbtn';
 
 const Loginscreen = ({ onComplete }) => {
   const [email, setEmail] = useState('');
   const [password, setpassword] = useState('');
   const [showSignin, setShowSignin] = useState(false);
+  const [showforgetpas, setShowforgetpass] = useState(false);
   const submit = async () => {
     if (!email || !password) {
       Alert.alert('enter email and password to login')
@@ -27,9 +29,13 @@ const Loginscreen = ({ onComplete }) => {
     return <SigninScreen onComplete={() => setShowSignin(false)} />
   }
 
+  if (showforgetpas) {
+    return <ForgotPassword onComplete={()=> setShowforgetpass(false)}/>
+  }
+
   return (
-    <KeyboardAvoidingView style={styles.keyboardAvoiding} behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}>
-      <ScrollView style={{backgroundColor:'#eaf4ff'}} contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}} keyboardShouldPersistTaps={'handled'}>
+    <KeyboardAvoidingView style={styles.keyboardAvoiding} behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}>
+      <ScrollView style={{backgroundColor:'#eaf4ff'}} contentContainerStyle={{flexGrow: 1, justifyContent: 'center' }} keyboardShouldPersistTaps={'handled'}>
         <View style={styles.mainContainer}>
           <Image source={require('../images/logo2.png')} style={styles.logo} resizeMode="contain" />
           
@@ -58,10 +64,13 @@ const Loginscreen = ({ onComplete }) => {
                 value={password}
                 onChangeText={(password)=>setpassword(password)}
                 />
-                
             </View>
-            {/* Optionally add a Forgot Password link here */}
-          </View>
+            <View style={styles.forgotContainer}>
+              <TouchableOpacity onPress={() => setShowforgetpass(true)}>
+                <Text style={styles.forgotText}>Forgot Password?</Text>
+              </TouchableOpacity>
+            </View>
+            </View>
           <View style={styles.buttonRow}>
             <TouchableOpacity
               style={styles.btnStyles}
@@ -91,6 +100,7 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
+    marginTop:40,
     backgroundColor: '#eaf4ff',
     alignItems: 'center',
     justifyContent: 'center',
@@ -164,5 +174,14 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 18,
+  },
+  forgotContainer: {
+    marginTop: 10,
+    alignItems: "flex-end",
+  },
+  forgotText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#2f7acf",
   },
 })

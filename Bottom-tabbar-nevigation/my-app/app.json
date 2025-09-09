@@ -8,7 +8,7 @@
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": false,
+    "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.expo.myapp",
@@ -48,7 +48,8 @@
       "router": {},
       "eas": {
         "projectId": "812be680-e9b2-4c4d-bbfc-73a3e557bd1b"
-      }
+      },
+      "OPENAI_API_KEY": "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"
     }
   }
 }
