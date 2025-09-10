@@ -79,6 +79,19 @@ const CustomeDrawerContent=(props)=>{
           router.push('/Webview');
         }}/>
 
+<DrawerItem
+        icon={() => (
+          <MaterialIcons name="support-agent" size={24} color= {pathname === '/(support)'  ? '#fff' : '#000'} />
+        )}
+        
+        label={'Support'}
+        labelStyle={[styles.navitemlable,{color: pathname === '/Webview'  ? '#fff' : '#000'}]}
+        style={{backgroundColor:(pathname === '/(support)') ? '#333' : '#fff'}}
+        onPress={()=>{
+          router.push('/support');
+        }}/>
+
+
       <DrawerItem
         icon={() => (
          <Feather name='settings' size={24} color= {(pathname === '/Settings') ? '#fff' : '#000'} />
