@@ -42,7 +42,7 @@ const SigninScreen = ({ onComplete }) => {
     }
   }
   return (
-    <KeyboardAvoidingView style={styles.keyboardAvoiding} behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}>
+    <KeyboardAvoidingView style={styles.keyboardAvoiding} behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}>
       <ScrollView style={{backgroundColor:'#eaf4ff'}} contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}} keyboardShouldPersistTaps={'handled'}>
         <View style={styles.mainContainer}>
           <Image source={require('../images/logo2.png')} style={styles.logo} resizeMode="contain" />

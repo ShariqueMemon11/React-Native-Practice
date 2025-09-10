@@ -1,8 +1,7 @@
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { Drawer } from 'expo-router/drawer';
 import {router , usePathname } from 'expo-router'
-import {Feather ,MaterialCommunityIcons} from '@expo/vector-icons';
-import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
+import {Feather ,MaterialCommunityIcons,MaterialIcons} from '@expo/vector-icons';
 import { Image, StyleSheet, View , Text } from 'react-native';
 import { useContext } from 'react';
 import { ThemeContext } from '@/app/src/context/ThemeContext';

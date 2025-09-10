@@ -109,9 +109,11 @@ const Chatbot = () => {
             />
           );
         }}
-        renderBubble={props => (
+        renderBubble={props => {
+          const { key, ...bubbleProps } = props as any;
+          return (
           <Bubble
-            {...props}
+            {...bubbleProps}
             wrapperStyle={{
               left: {
                 backgroundColor: '#e4e6eb',
@@ -128,10 +130,13 @@ const Chatbot = () => {
               right: { color: '#fff' },
             }}
           />
-        )}
-        renderInputToolbar={props => (
+          );
+        }}
+        renderInputToolbar={props => {
+            const { key, ...toolbarProps } = props as any;
+            return (
           <InputToolbar
-            {...props}
+            {...toolbarProps}
             containerStyle={{
               borderTopWidth: 0,
               padding: 6,
@@ -139,9 +144,11 @@ const Chatbot = () => {
               borderTopRightRadius: 20,
               borderTopLeftRadius: 20,
             }}
-            renderComposer={composerProps => (
+            renderComposer={composerProps => {
+              const { key: _composerKey, ...composerRest } = composerProps as any;
+              return (
               <Composer
-                {...composerProps}
+                {...composerRest}
                 textInputStyle={{
                   backgroundColor: '#f2f2f2', // ✅ Make input background white
                   borderRadius: 25,
@@ -158,9 +165,12 @@ const Chatbot = () => {
                 }}
                 placeholder="Type a message..."
               />
-            )}
-            renderSend={sendProps => (
-              <Send {...sendProps}>
+              );
+            }}
+            renderSend={sendProps => {
+              const { key: _sendKey, ...sendRest } = sendProps as any;
+              return (
+              <Send {...sendRest}>
                 <View
                   style={{
                     backgroundColor: '#007AFF',
@@ -175,9 +185,11 @@ const Chatbot = () => {
                   <Ionicons name="send" size={20} color="#fff" />
                 </View>
               </Send>
-            )}
+              );
+            }}
           />
-        )}
+            );
+        }}
       />
       </ImageBackground>
     </SafeAreaView>
