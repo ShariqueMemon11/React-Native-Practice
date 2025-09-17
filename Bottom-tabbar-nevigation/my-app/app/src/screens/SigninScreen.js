@@ -3,11 +3,13 @@ import React , {useState} from 'react'
 import { createUserWithEmailAndPassword , updateProfile} from "firebase/auth";
 import { doc ,setDoc } from 'firebase/firestore';
 import { auth } from '@/firebaseConfig';
-import { router } from 'expo-router';
+import { router , useLocalSearchParams} from 'expo-router';
 import { db } from '@/firebaseConfig';
 import GoogleLoginButton from '../component/googlesignup';
+import { AntDesign, Feather } from '@expo/vector-icons';
 
 const SigninScreen = ({ onComplete }) => {
+  const { plan,membership, price } = useLocalSearchParams();
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setpassword] = useState('');
@@ -46,7 +48,13 @@ const SigninScreen = ({ onComplete }) => {
       <ScrollView style={{backgroundColor:'#eaf4ff'}} contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}} keyboardShouldPersistTaps={'handled'}>
         <View style={styles.mainContainer}>
           <Image source={require('../images/logo2.png')} style={styles.logo} resizeMode="contain" />
-          
+          <View style={[styles.membership,{backgroundColor: plan === 'silver' ? '#B2B0B3' : plan ==='gold'? '#ECC14E' : '#E1E1E1',}]}>          
+           <AntDesign name='crown' color={'white'} size={30} />
+           <View>
+            <Text style={{marginBottom:5, color:'white'}}>{membership}</Text>
+            <Text style={{fontSize:18, color:'white'}}>{price}</Text>
+           </View>
+          </View>
           <View style={styles.formContainer}>
           <View style={styles.inputContainer}>
               <Text style={styles.labels}>Full Name</Text>
@@ -208,6 +216,22 @@ const styles = StyleSheet.create({
     fontFamily:'JosefinSans_300Light',
     textAlign:'center',
   },
+  membership:{
+      flexDirection:'row',
+      gap:20 , 
+      marginTop:-20,
+      justifyContent:'center',
+      alignItems:'center',
+      marginBottom:10,
+      paddingVertical: 10,
+      paddingHorizontal: 20,
+      borderWidth: 1,
+      borderRadius: 10,   
+      backgroundColor:"#A20000",
+      paddingRight:70,
+      borderColor:'transparent'
+    }
+  
   
   
 })    

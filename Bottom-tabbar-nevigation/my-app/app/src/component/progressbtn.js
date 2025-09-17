@@ -29,7 +29,7 @@ const ProgressButton = ({ progress, onPress, disabled, children }) => (
         strokeWidth={STROKE_WIDTH}
       />
       <Circle
-        stroke="#007AFF"
+        stroke="red"
         fill="none"
         cx={BUTTON_SIZE / 2}
         cy={BUTTON_SIZE / 2}

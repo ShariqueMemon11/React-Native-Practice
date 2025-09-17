@@ -1,57 +1,63 @@
 import { View, Text, StatusBar, Image, TouchableOpacity, Dimensions, Animated } from 'react-native'
 import React, { useState, useRef } from 'react'
 import ProgressButton from '../component/progressbtn'
+import TierCard from '../component/TierCard';
+import { useRouter } from 'expo-router';
 
 const { width, height } = Dimensions.get('window');
 
 const data = [
     {
-      image: require('../images/group.png'),
-      title: 'Welcome to SANA',
-      text: 'Join a vibrant community of Sindhis in North America and around the world. Celebrate culture, tradition, and unity',
+      logo: require('../images/sana.png'),
+      title: 'Become  SANA’s \n Community Silver Member',
+      text: 'Join the Sindhi community across North America. Access events, scholarships, \nnetworking, and more.',
+      price: '$40',
+      features: [
+        'Access to general news and community updates',
+        'Browse upcoming public events',
+        'View business and job listings (read-only)',
+        'Limited access to SANA’s language and cultural resources',
+        'View Goods from Marketplace'
+      ],
+      route:'/pricing/silver'
     },
     {
-      image: require('../images/screen2.png'),
-      title: 'Explore Programs & \nOpportunities',
-      text: 'Discover Jobs, scholarships, learn Sindhi, attend cultural events, and find your perfect match — all in one place.',
-      bg: 'white',
+      logo: require('../images/sana.png'),
+      title: 'Become  SANA’s \n Community Gold Member',
+      text: 'Join the Sindhi community across North America. Access events, scholarships, \nnetworking, and more.',
+      price: '$80',
+      features: [
+        'Register Your Business in SANA’s Online',
+        'Exclusive SANA’s Convention Member',
+        'Unlimited Business register and buying from market place',
+        'Invitation to exclusive SANA matrimonial events',
+        'Priority customer support',
+      ],
+      colors:{cardBg : '#ECC14E'},
+      route:'/pricing/gold'
     },
     {
-      image: require('../images/screen3.png'),
-      title: 'Health Support for Our \nCommunity',
-      text: "Consult trusted doctors online with SANA’s virtual health services .",
-      bg: 'white',
-    },
-    {
-      image: require('../images/screen4.png'),
-      title: 'Community Marketplaces',
-      text: "Browse a wide range of products listed by community members. Support Sindhi sellers, find cultural items, and make trusted transactions within the network..",
-      bg: 'white',
-    },
-    {
-      image: require('../images/screen5.png'),
-      title: 'Support Sindhi-Owned \nBusinesses',
-      text: "Discover services and businesses run by fellow Sindhis across North America. Promote your venture or find reliable services in the community.",
-      bg: 'white',
-    },
-    {
-      image: require('../images/screen6.png'),
-      title: 'Connect & Communicate \nFreely',
-      text: "Join group discussions or start one-on-one chats with SANA members. Stay informed, share ideas, and build lasting connections.",
-      bg: 'white',
-    },
-    {
-      image: require('../images/screen7.png'),
-      title: 'Celebrate Sindhi Events Across \n North America',
-      text: "Join community gatherings, cultural celebrations, and important Sindhi events happening near you. Stay updated, connect with fellow members, and never miss a moment that matters.",
-      bg: 'white',
-    },
+      logo: require('../images/sana.png'),
+      title: 'Become  SANA’s \n Community Platinum Member',
+      text: 'Join the Sindhi community across North America. Access events, scholarships, \nnetworking, and more.',
+      price: '$120',
+      features: [
+        'Access to member-exclusive events and webinars',
+        "Exclusive SANA’s Convention Member",
+        'Unlimited Business register and buying from market place',
+        'Invitation to exclusive SANA matrimonial events',
+        'Priority customer support',
+      ],
+      colors:{cardBg : '#D9D9D9' ,headerText : 'black' , priceText : 'black'}
+     , route:'/pricing/platinum'
+    }
 ];
 
-const Onboard = ({ onComplete }) => {
+const Membership = ({ onComplete }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const fadeAnim = useRef(new Animated.Value(1)).current;
   const slideAnim = useRef(new Animated.Value(0)).current;
+  const router = useRouter()
 
   // Smooth transition animation
   const animateTransition = (direction) => {
@@ -87,12 +93,10 @@ const Onboard = ({ onComplete }) => {
   const goToNext = () => {
     if (currentIndex < data.length - 1) {
       animateTransition('next');
-      setTimeout(() => {
+        setTimeout(() => {
         setCurrentIndex(currentIndex + 1);
       }, 150);
-    } else {
-      onComplete();
-    }
+    } 
   };
 
   const goToPrev = () => {
@@ -127,7 +131,7 @@ const Onboard = ({ onComplete }) => {
       >
         <Image 
           style={styles.mainImage} 
-          source={item.image}
+          source={item.logo}
           resizeMode="contain"
         />
         <Text style={styles.titleText}>
@@ -136,6 +140,22 @@ const Onboard = ({ onComplete }) => {
         <Text style={styles.descriptionText}>
           {item.text}
         </Text>
+        <TierCard
+         title={item.title.includes('Silver') ? 'Silver' : item.title.includes('Gold') ? 'Gold' : 'Platinum'}
+         subtitle={"Premium Experience for Sindhi\nConnections"}
+         price={item.price}
+         features={item.features}
+         colors={item.colors}
+         route={item.route}
+         onPress={() => {
+           if (onComplete) {
+             onComplete();
+           }
+           setTimeout(() => {
+             router.push(item.route);
+           }, 50);
+         }}
+        />
       </Animated.View>
     )
   }
@@ -187,13 +207,6 @@ const Onboard = ({ onComplete }) => {
     );
   };
 
-  const renderSkipButton = () => {
-    return (
-      <TouchableOpacity style={styles.skipButton} onPress={onComplete}>
-        <Text style={styles.skipText}>Skip</Text>
-      </TouchableOpacity>
-    );
-  };
 
   return (
     <View style={styles.mainContainer}>
@@ -212,7 +225,6 @@ const Onboard = ({ onComplete }) => {
           {renderNavigationButtons()}
           
       
-          {renderSkipButton()}
         </View>
       </View>
     </View>
@@ -247,16 +259,18 @@ const styles = {
     width: '100%',
   },
   mainImage: {
-    width: width * 0.8,
+    width: width * 0.2,
     height: height * 0.3,
-    marginBottom: 40,
+    marginBottom: -60,
+    marginTop:-400
   },
   titleText: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: '600',
     fontFamily: 'Poppins',
     color: '#000000',
-    marginBottom: 25,
+    marginBottom: 5,
+    marginTop: -20,
     textAlign: 'center',
     lineHeight: 32,
   },
@@ -268,11 +282,12 @@ const styles = {
     textAlign: 'center',
     lineHeight: 20,
     paddingHorizontal: 20,
+    marginBottom:15
   },
   bottomNavigationBar: {
     backgroundColor: 'transparent', // No black background
-    paddingTop: 30,
-    paddingBottom: 50,
+    paddingTop: 80,
+    paddingBottom: -5,
     paddingHorizontal: 20,
     minHeight: 200,
   },
@@ -280,7 +295,7 @@ const styles = {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 40,
+    marginBottom: 10,
   },
   dot: {
     width: 7,
@@ -301,7 +316,7 @@ const styles = {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 30,
+    marginBottom: -20,
     paddingHorizontal: 20,
   },
   
@@ -322,4 +337,4 @@ const styles = {
   },
 };
 
-export default Onboard
+export default Membership
