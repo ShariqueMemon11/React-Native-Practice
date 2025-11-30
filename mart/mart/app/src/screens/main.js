@@ -2,17 +2,20 @@ import { View, Image, Pressable, StyleSheet} from 'react-native'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import CameraModal from '../component/camera_modal';
 import { useState } from 'react';
-import { router } from 'expo-router';
 
-const main = ({Oncomplete}) => {
+const main = ({onNavigate}) => {
   const [scanneropen , setsacnneropen] = useState(false)
   return (
     <View style={styles.container}>
       <View style={styles.cardRow}>
-        <Pressable style={styles.card} onPress={()=> router.push('/')}>
+        <Pressable style={styles.card} onPress={()=> {
+          onNavigate('grocery');
+        }}>
           <Image style={styles.cardImage} source={require('../assets/images/grocery.jpg')}/>
         </Pressable>
-        <Pressable style={styles.card} onPress={()=> router.push('/src/screens/medicines')}>
+        <Pressable style={styles.card} onPress={()=> {
+          onNavigate('medicines');
+        }}>
           <Image style={styles.cardImage} source={require('../assets/images/medi.jpg')}/>
         </Pressable>
       </View>
